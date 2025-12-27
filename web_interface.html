@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biyodijital Motor Analiz Terminali</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 70% 30%;
+            gap: 20px;
+        }
+
+        .panel {
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel-title {
+            color: #00d4ff;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #404040;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        label {
+            color: #e0e0e0;
+            font-size: 13px;
+        }
+
+        select,
+        input {
+            background: #3d3d3d;
+            border: 1px solid #555555;
+            border-radius: 5px;
+            padding: 8px 12px;
+            color: #e0e0e0;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        select:hover,
+        input:hover {
+            border-color: #00d4ff;
+        }
+
+        button {
+            background: #3d3d3d;
+            border: 1px solid #555555;
+            border-radius: 5px;
+            padding: 8px 15px;
+            color: #e0e0e0;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+
+        button:hover {
+            background: #4d4d4d;
+            border-color: #00d4ff;
+        }
+
+        button:active {
+            background: #2d2d2d;
+        }
+
+        button:disabled {
+            background: #2a2a2a;
+            color: #666666;
+            border-color: #333333;
+            cursor: not-allowed;
+        }
+
+        .btn-start {
+            background: #00a86b;
+            border-color: #00c97a;
+        }
+
+        .btn-start:hover:not(:disabled) {
+            background: #00c97a;
+        }
+
+        .btn-stop {
+            background: #d9534f;
+            border-color: #e74c3c;
+        }
+
+        .btn-stop:hover:not(:disabled) {
+            background: #e74c3c;
+        }
+
+        .status-indicator {
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        .status-disconnected {
+            color: #d9534f;
+        }
+
+        .status-connected {
+            color: #00a86b;
+        }
+
+        .status-stopped {
+            color: #999999;
+        }
+
+        .status-running {
+            color: #00a86b;
+        }
+
+        .status-completed {
+            color: #00d4ff;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .module-label {
+            font-weight: normal;
+            font-size: 13px;
+        }
+
+        .graph-container {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .graph-title {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            color: #00d4ff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .graph-placeholder {
+            color: #666666;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .stat-item {
+            color: #e0e0e0;
+            font-size: 13px;
+        }
+
+        .ai-panel {
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 20px;
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .ai-result {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-y: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #b0b0b0;
+        }
+
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #252525;
+            border-top: 1px solid #404040;
+            padding: 8px 20px;
+            color: #b0b0b0;
+            font-size: 12px;
+            z-index: 1000;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2d2d2d;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #555555;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00d4ff;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-panel {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sol Panel - Modüller -->
+        <div class="left-panel">
+            <!-- Kontrol Paneli -->
+            <div class="panel">
+                <div class="panel-title">Kontrol Paneli</div>
+
+                <div class="control-row">
+                    <label>Seri Port:</label>
+                    <select id="portSelect">
+                        <option>COM3</option>
+                        <option>COM4</option>
+                        <option>COM5</option>
+                    </select>
+                    <button id="connectBtn" onclick="toggleConnection()">Bağlan</button>
+                    <span class="status-indicator status-disconnected" id="connectionStatus">● Bağlı Değil</span>
+                </div>
+
+                <div class="panel" style="margin-top: 15px;">
+                    <div class="panel-title">Modül Kontrolleri</div>
+
+                    <div class="module-grid">
+                        <span class="module-label">Modül A (Tremor):</span>
+                        <button class="btn-start" onclick="startModule('A')">Başlat (1)</button>
+                        <button class="btn-stop" disabled id="stopA">Durdur</button>
+                        <span class="status-indicator status-stopped" id="statusA">● Durduruldu</span>
+
+                        <span class="module-label">Modül B (Bradikinezi):</span>
+                        <button class="btn-start" onclick="startModule('B')">Başlat (2)</button>
+                        <button class="btn-stop" disabled id="stopB">Durdur</button>
+                        <span class="status-indicator status-stopped" id="statusB">● Durduruldu</span>
+
+                        <span class="module-label">Modül C (Koordinasyon):</span>
+                        <button class="btn-start" onclick="startModule('C')">Başlat (3)</button>
+                        <button class="btn-stop" disabled id="stopC">Durdur</button>
+                        <span class="status-indicator status-stopped" id="statusC">● Durduruldu</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modül A -->
+            <div class="panel">
+                <div class="panel-title">MODÜL A: Tremor Analizi (LDR Sensör)</div>
+                <div class="graph-container">
+                    <div class="graph-title">LDR Sinyal</div>
+                    <canvas id="graphA"></canvas>
+                </div>
+            </div>
+
+            <!-- Modül B -->
+            <div class="panel">
+                <div class="panel-title">MODÜL B: Bradikinezi Analizi (Mesafe Sensörü)</div>
+                <div class="graph-container">
+                    <div class="graph-title">Mesafe Ölçümü</div>
+                    <canvas id="graphB"></canvas>
+                </div>
+            </div>
+
+            <!-- Modül C -->
+            <div class="panel">
+                <div class="panel-title">MODÜL C: Koordinasyon Testi (Reaksiyon Zamanı)</div>
+                <div class="stats-row">
+                    <div class="stat-item" id="totalPresses">Toplam Basış: 0/20</div>
+                    <div class="stat-item" id="avgReaction">Ortalama: - ms</div>
+                </div>
+                <div class="graph-container">
+                    <div class="graph-title">Reaksiyon Zamanları</div>
+                    <canvas id="graphC"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ Panel - AI Analiz -->
+        <div class="ai-panel">
+            <div class="panel-title">AI Analiz Sonuçları</div>
+
+            <div class="ai-controls">
+                <button class="btn-start" onclick="runAIAnalysis()">Son Analizi Çalıştır</button>
+                <button class="btn-start" onclick="runHistoricalAnalysis()">Geçmiş Analizleri İncele</button>
+                <span class="status-indicator status-stopped" id="aiStatus">● Hazır</span>
+            </div>
+
+            <div class="ai-result" id="aiResult">
+                AI analiz sonuçları burada görünecek...
+
+                Tüm modülleri tamamladıktan sonra analiz otomatik çalışacak.
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar" id="statusBar">Hazır</div>
+
+    <script>
+        let isConnected = false;
+        let runningModules = { A: false, B: false, C: false };
+        let graphContexts = {
+            A: null,
+            B: null,
+            C: null
+        };
+        let graphData = {
+            A: { time: [], values: [] },
+            B: { time: [], values: [] },
+            C: { trials: [], reactions: [] }
+        };
+
+        // Initialize graphs
+        window.addEventListener('load', () => {
+            graphContexts.A = document.getElementById('graphA').getContext('2d');
+            graphContexts.B = document.getElementById('graphB').getContext('2d');
+            graphContexts.C = document.getElementById('graphC').getContext('2d');
+
+            // Set canvas size
+            ['graphA', 'graphB', 'graphC'].forEach(id => {
+                const canvas = document.getElementById(id);
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            });
+        });
+
+        function toggleConnection() {
+            isConnected = !isConnected;
+            const btn = document.getElementById('connectBtn');
+            const status = document.getElementById('connectionStatus');
+
+            if (isConnected) {
+                btn.textContent = 'Bağlantıyı Kes';
+                status.textContent = '● Bağlı';
+                status.className = 'status-indicator status-connected';
+                updateStatusBar('Arduino\'ya bağlandı');
+            } else {
+                btn.textContent = 'Bağlan';
+                status.textContent = '● Bağlı Değil';
+                status.className = 'status-indicator status-disconnected';
+                updateStatusBar('Bağlantı kesildi');
+            }
+        }
+
+        function startModule(module) {
+            if (!isConnected) {
+                updateStatusBar('Önce Arduino\'ya bağlanın!');
+                return;
+            }
+
+            runningModules[module] = true;
+            const stopBtn = document.getElementById('stop' + module);
+            const statusEl = document.getElementById('status' + module);
+
+            stopBtn.disabled = false;
+            statusEl.textContent = '● Çalışıyor';
+            statusEl.className = 'status-indicator status-running';
+            updateStatusBar(`Modül ${module} başlatıldı`);
+
+            // Simulate data collection
+            simulateData(module);
+        }
+
+        function stopModule(module) {
+            runningModules[module] = false;
+            const stopBtn = document.getElementById('stop' + module);
+            const statusEl = document.getElementById('status' + module);
+
+            stopBtn.disabled = true;
+            statusEl.textContent = '● Durduruldu';
+            statusEl.className = 'status-indicator status-stopped';
+            updateStatusBar(`Modül ${module} durduruldu`);
+        }
+
+        function simulateData(module) {
+            if (!runningModules[module]) return;
+
+            const time = graphData[module].time.length * 0.1;
+
+            if (module === 'A') {
+                // LDR simulation
+                const value = 500 + Math.random() * 100 + Math.sin(time * 2) * 50;
+                graphData.A.time.push(time);
+                graphData.A.values.push(value);
+                drawGraph('A', '#00d4ff', 'LDR Değeri', 0, 800);
+            } else if (module === 'B') {
+                // Distance simulation
+                const value = 100 + Math.random() * 50 + Math.sin(time * 3) * 20;
+                graphData.B.time.push(time);
+                graphData.B.values.push(value);
+                drawGraph('B', '#00ff88', 'Mesafe (mm)', 0, 200);
+            } else if (module === 'C') {
+                // Reaction time simulation
+                if (graphData.C.trials.length < 20) {
+                    const trial = graphData.C.trials.length + 1;
+                    const reaction = 400 + Math.random() * 400;
+                    graphData.C.trials.push(trial);
+                    graphData.C.reactions.push(reaction);
+
+                    document.getElementById('totalPresses').textContent = `Toplam Basış: ${trial}/20`;
+                    const avg = graphData.C.reactions.reduce((a, b) => a + b, 0) / graphData.C.reactions.length;
+                    document.getElementById('avgReaction').textContent = `Ortalama: ${avg.toFixed(0)} ms`;
+
+                    drawScatterGraph('C', '#ffaa00', 'Reaksiyon (ms)', 0, 1000);
+
+                    if (trial >= 20) {
+                        setTimeout(() => {
+                            stopModule('C');
+                            document.getElementById('statusC').textContent = '● Tamamlandı';
+                            document.getElementById('statusC').className = 'status-indicator status-completed';
+                        }, 1000);
+                        return;
+                    }
+                }
+            }
+
+            // Auto-stop after 10 seconds for A and B
+            if ((module === 'A' || module === 'B') && time >= 10) {
+                stopModule(module);
+                document.getElementById('status' + module).textContent = '● Tamamlandı';
+                document.getElementById('status' + module).className = 'status-indicator status-completed';
+                return;
+            }
+
+            setTimeout(() => simulateData(module), module === 'C' ? 2000 : 100);
+        }
+
+        function drawGraph(module, color, label, minY, maxY) {
+            const ctx = graphContexts[module];
+            const canvas = ctx.canvas;
+            const data = graphData[module];
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (data.time.length === 0) return;
+
+            const padding = 40;
+            const graphWidth = canvas.width - padding * 2;
+            const graphHeight = canvas.height - padding * 2;
+
+            // Draw grid
+            ctx.strokeStyle = '#404040';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (graphHeight / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+            }
+
+            // Draw data
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            const maxTime = Math.max(...data.time);
+            const range = maxY - minY;
+
+            data.time.forEach((t, i) => {
+                const x = padding + (t / maxTime) * graphWidth;
+                const y = canvas.height - padding - ((data.values[i] - minY) / range) * graphHeight;
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+
+            ctx.stroke();
+        }
+
+        function drawScatterGraph(module, color, label, minY, maxY) {
+            const ctx = graphContexts[module];
+            const canvas = ctx.canvas;
+            const data = graphData[module];
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (data.trials.length === 0) return;
+
+            const padding = 40;
+            const graphWidth = canvas.width - padding * 2;
+            const graphHeight = canvas.height - padding * 2;
+
+            // Draw grid
+            ctx.strokeStyle = '#404040';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (graphHeight / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+            }
+
+            // Draw points
+            ctx.fillStyle = color;
+            const range = maxY - minY;
+
+            data.trials.forEach((trial, i) => {
+                const x = padding + ((trial - 1) / 19) * graphWidth;
+                const y = canvas.height - padding - ((data.reactions[i] - minY) / range) * graphHeight;
+
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function runAIAnalysis() {
+            updateStatusBar('AI Analizi başlatılıyor...');
+            document.getElementById('aiStatus').textContent = '● Yükleniyor...';
+            document.getElementById('aiStatus').className = 'status-indicator status-running';
+
+            const result = document.getElementById('aiResult');
+            result.textContent = '📊 Analiz başlatıldı...\n\n';
+
+            setTimeout(() => {
+                result.textContent += '✅ Modül A analiz tamamlandı\n';
+                result.textContent += '✅ Modül B analiz tamamlandı\n';
+                result.textContent += '✅ Modül C analiz tamamlandı\n\n';
+                result.textContent += 'AI yanıtı:\n';
+                result.textContent += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+                result.textContent += 'Analiz sonuçları değerlendiriliyor...\n';
+                result.textContent += '(Bu web versiyonunda AI entegrasyonu devre dışıdır)\n';
+
+                document.getElementById('aiStatus').textContent = '● Tamamlandı';
+                document.getElementById('aiStatus').className = 'status-indicator status-completed';
+                updateStatusBar('AI Analizi tamamlandı');
+            }, 2000);
+        }
+
+        function runHistoricalAnalysis() {
+            updateStatusBar('Geçmiş analizler yükleniyor...');
+            const result = document.getElementById('aiResult');
+            result.textContent = '📁 Geçmiş analizler aranıyor...\n\n';
+            result.textContent += '(Bu web versiyonunda geçmiş veri gösterimi devre dışıdır)\n';
+        }
+
+        function updateStatusBar(message) {
+            document.getElementById('statusBar').textContent = message;
+        }
+    </script>
+</body>
+
+</html>
