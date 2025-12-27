@@ -1,137 +1,126 @@
-# 🏥 Hasta Takip Sistemi (Patient Tracking System)
+# 🧠 Biyodijital Motor Analiz Terminali (Bio-digital Motor Analysis Terminal)
 
-![Lisans](https://img.shields.io/badge/license-MIT-blue.svg) ![Durum](https://img.shields.io/badge/status-Geliştirme-orange) ![Dil](https://img.shields.io/badge/language-Python%20%7C%20JavaScript-green)
+![Proje Arayüzü](image_55b363.jpg)
 
-> **Hackathon Projesi** > **Takım Adı:** syntax
+> **Takım:** SYNTAX  
+> [cite_start]**Kurum:** Bursa Teknik Üniversitesi [cite: 52]  
+> [cite_start]**Durum:** Prototip Geliştirme Aşamasında (Aralık 2025) [cite: 53]
 
 ---
 
 ## 📋 İçindekiler
-1. [Proje Özeti](#-proje-özeti)
-2. [Problem ve İhtiyaç Analizi](#-problem-ve-ihtiyaç-analizi)
-3. [Çözüm Yaklaşımı](#-çözüm-yaklaşımı)
-4. [Teknik Mimari](#-teknik-mimari)
-5. [Yenilik ve Katma Değer](#-yenilik-ve-katma-değer)
-6. [Kurulum ve Çalıştırma](#-kurulum-ve-çalıştırma)
-7. [Etki ve Fayda](#-etki-ve-fayda)
-8. [Yol Haritası](#-yol-haritası)
-9. [Takım](#-takım-bilgileri)
-10. [Ekran Görüntüleri](#-ekran-görüntüleri)
+1. [Proje Tanımı ve Amacı](#-proje-tanımı-ve-amacı)
+2. [Hedeflenen Problemler](#-hedeflenen-problemler)
+3. [Sistem Mimarisi ve Modüller](#-sistem-mimarisi-ve-modüller)
+4. [Teknik Donanım ve Mekanik](#-teknik-donanım-ve-mekanik)
+5. [Yazılım ve AI Analizi](#-yazılım-ve-ai-analizi)
+6. [Kurulum](#-kurulum)
+7. [Takım](#-takım)
 
 ---
 
-## 💡 Proje Özeti
-[cite_start]**Hasta Takip Sistemi**, sağlık personelinin hastaların durumunu uzaktan izlemesini sağlayan, özellikle tremor, bradikinezi ve koordinasyon bozuklukları gibi belirtilerin takibi için geliştirilmiş entegre bir yazılım ve donanım çözümüdür. [cite: 2, 3]
+## 💡 Proje Tanımı ve Amacı
+[cite_start]**Biyodijital Motor Analiz Terminali**, Parkinson ve benzeri nörolojik hastalıklarda görülen motor beceri kayıplarını sensörler aracılığıyla ölçmeyi ve nicel veriye dökmeyi amaçlayan entegre bir sistemdir[cite: 56].
 
-[cite_start]Sistem, sensörlerden alınan verilerin dijital ortamda saklanmasını, anlık olarak görselleştirilmesini ve AI (Yapay Zeka) destekli analizler sunarak doktorların daha doğru teşhis ve tedavi planlaması yapmasına yardımcı olmayı amaçlamaktadır. [cite: 5, 19]
-
----
-
-## 🎯 Problem ve İhtiyaç Analizi
-* [cite_start]**Problem:** Geleneksel yöntemlerde hasta takibi genellikle manuel gözleme ve notlara dayanmakta, bu da veri kaybına, hatalı analizlere ve hastalığın seyrinin hassas bir şekilde izlenmesinde zorluklara yol açmaktadır. [cite: 8]
-* [cite_start]**Aciliyet:** Kronik rahatsızlıkları olan hastaların düzenli ve kesintisiz (7/24) veri akışıyla takip edilmesi, olası krizlerin önlenmesi ve tedavinin optimize edilmesi için kritiktir. [cite: 9]
-* [cite_start]**İhtiyaç:** Hem doktor hem de hasta tarafından kolayca erişilebilen, sensör verilerini işleyip anlamlı raporlara dönüştüren, kullanıcı dostu ve güvenilir bir dijital platform gereksinimi vardır. [cite: 10]
+Projenin temel hedefleri:
+* [cite_start]**Dijital Parmak İzi:** Hastadan toplanan hareket verilerini işleyerek hastaya özgü bir profil oluşturmak[cite: 57].
+* [cite_start]**Objektif Takip:** Verileri analiz edip görselleştirerek doktor ve hasta arasında sürdürülebilir bir takip mekanizması kurmak[cite: 58].
+* **Bilimsel Temel:** Espay ve ark. (2016) [cite_start]ve Maetzler (2013) gibi literatür çalışmalarına dayanarak klinik geçerliliği olan veriler sunmak[cite: 67, 68].
 
 ---
 
-## 🩺 Çözüm Yaklaşımı
-[cite_start]Projemiz, hastadan toplanan verileri güvenli bir şekilde işleyerek web tabanlı bir kontrol panelinde görselleştiren uçtan uca bir sistemdir. [cite: 12]
+## 🎯 Hedeflenen Problemler
+[cite_start]Proje, Parkinson hastalığının üç temel belirtisinin takibine odaklanmaktadır[cite: 59]:
 
-* [cite_start]**Sistem İşleyişi:** Seri port üzerinden bağlanan sensör modülleri (Tremor, Bradikinezi, Koordinasyon) başlatılır ve veri toplamaya başlar. [cite: 13, 20]
-* [cite_start]**Etkileşim:** Kullanıcı, web arayüzü üzerinden modülleri kontrol edebilir, anlık sensör grafiklerini izleyebilir ve toplanan veriler üzerinde AI analizi çalıştırarak sonuçları inceleyebilir. [cite: 14]
-
----
-
-## 🛠 Teknik Mimari
-
-### 4.1 Teknolojik Bileşenler
-* [cite_start]**Yazılım Dilleri:** [Python, JavaScript, vb.] [cite: 17]
-* **Framework/Kütüphaneler:** [React/Vue.js (Frontend), Flask/Django (Backend), TensorFlow/PyTorch (AI), vb.]
-* **Veritabanı:** [PostgreSQL / Firebase / MongoDB]
-* [cite_start]**Donanım:** [Arduino/Mikrodenetleyici, LDR Sensörler, İvmeölçer, vb.] [cite: 18]
-* [cite_start]**Haberleşme:** Seri Port (COM) bağlantısı. [cite: 19]
-
-### 4.2 Çalışma Mantığı
-1.  [cite_start]**Veri Toplama:** Kullanıcı arayüzünden başlatılan modüller (A, B, C), bağlı sensörlerden (örn. LDR) seri port aracılığıyla veri okur. [cite: 21]
-2.  **İşleme ve Görselleştirme:** Alınan ham veriler işlenir ve "Tremor Analizi" grafiği gibi anlık grafiklere dönüştürülerek panelde gösterilir.
-3.  [cite_start]**AI Analizi:** Toplanan veri setleri tamamlandığında, yapay zeka algoritması devreye girer, analizi gerçekleştirir ve sonuçları kullanıcıya sunar. [cite: 22]
+1.  [cite_start]**Tremor (Titreme):** İstirahat halindeki veya hareket sırasındaki titremeler[cite: 60].
+2.  [cite_start]**Bradikinezi:** Hareketlerin yavaşlaması ve başlatma güçlüğü[cite: 61, 62].
+3.  [cite_start]**Rijidite:** Kas sertliği ve hareket zorluğu[cite: 65].
 
 ---
 
-## 🚀 Yenilik ve Katma Değer
-* [cite_start]**Özgün Yön:** Rakiplerden farklı olarak sistemimiz, sensör tabanlı veri toplama ile yapay zeka destekli analizi tek bir entegre platformda birleştirerek daha kapsamlı bir takip sunmaktadır. [cite: 25, 26]
-* [cite_start]**Katma Değer:** Doktorların hasta verilerini analiz etmek için harcadığı süreyi azaltır, nesnel verilere dayalı karar vermeyi destekler ve hastaların kendi durumlarını daha iyi anlamalarını sağlar. [cite: 27]
+## ⚙️ Sistem Mimarisi ve Modüller
+[cite_start]Terminal, üç ana test modülü üzerinden veri toplar ve analiz eder[cite: 80, 81, 82]:
+
+### 🔹 Modül A: Tremor Analizi
+* [cite_start]**Sensör:** LDR (Işık Bağımlı Direnç) ve Optik sensörler[cite: 83].
+* **İşlev:** Hastanın el titremelerinin frekansını (Hz) ve sinyal genliğini ölçer.
+* **Çıktı:** Zaman serisi grafiği üzerinden titreme analizi.
+
+### 🔹 Modül B: Bradikinezi Analizi
+* [cite_start]**Sensör:** Mesafe Sensörleri (Ultrasonik/Lazer)[cite: 88].
+* **İşlev:** Belirli bir mesafedeki hareketin hızı ve akıcılığını test eder.
+* **Çıktı:** Hareketin genliği ve hız grafikleri.
+
+### 🔹 Modül C: Koordinasyon Testi
+* **Sensör:** Butonlar ve Joystick mekanizması.
+* [cite_start]**İşlev:** Reaksiyon zamanını ve el-göz koordinasyonunu ölçer[cite: 94].
 
 ---
 
-## 💻 Kurulum ve Çalıştırma
-[cite_start]Projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları izleyebilirsiniz. [cite: 29]
+## 🛠 Teknik Donanım ve Mekanik
 
-1.  **Repoyu Klonlayın:**
+### Elektronik Bileşenler
+[cite_start]Sistem, mikrodenetleyici tabanlı bir mimariye sahiptir[cite: 70, 72]:
+* [cite_start]**Mikrodenetleyici:** Arduino UNO[cite: 72].
+* [cite_start]**Görüntüleme:** LCM 1602 IIC LCD Ekran[cite: 73].
+* **Sensörler:** HC-SR04 Ultrasonik Sensör, LDR Sensörler, Buton modülleri.
+* **Devre:** Breadboard üzerinde prototiplenmiş özel devre tasarımı.
+
+### Mekanik Tasarım
+* [cite_start]Özel tasarlanmış 3D baskı gövde[cite: 134].
+* Joystick ve butonlar için ergonomik yerleşim.
+* Tremor ölçümü için izole edilmiş sensör yuvası.
+
+---
+
+## 💻 Yazılım ve AI Analizi
+[cite_start]Yazılım arayüzü, donanımdan gelen verileri Seri Port (COM) üzerinden okur ve işler[cite: 77].
+
+### Arayüz Özellikleri
+* [cite_start]**Canlı Grafik:** LDR ve Mesafe sensörlerinden gelen verilerin anlık çizimi[cite: 113, 115].
+* [cite_start]**Modül Kontrolü:** Modül A, B ve C'nin bağımsız olarak başlatılıp durdurulması[cite: 79].
+* [cite_start]**AI Raporlama:** "Kıdemli Biyomedikal Veri Denetçisi" personasına sahip bir AI modeli, toplanan verileri yorumlar[cite: 112].
+    * [cite_start]*Örnek Analiz:* 10 Hz örnekleme hızının limitleri ve Nyquist frekansı değerlendirmesi[cite: 120, 130].
+
+---
+
+## 🚀 Kurulum
+
+1.  **Donanım Bağlantısı:**
+    * Arduino'yu USB kablosu ile bilgisayara bağlayın.
+    * [cite_start]Sensörlerin devre şemasına uygun bağlandığından emin olun[cite: 70].
+
+2.  **Yazılımı Çalıştırma:**
     ```bash
-    git clone [https://github.com/kullaniciadi/hasta-takip-sistemi.git](https://github.com/kullaniciadi/hasta-takip-sistemi.git)
-    cd hasta-takip-sistemi
-    ```
-
-2.  **Gereksinimleri Yükleyin:**
-    Donanım bağlantıları yapıldıktan sonra gerekli yazılım kütüphanelerini yükleyin.
-    ```bash
+    # Repoyu klonlayın
+    git clone [https://github.com/kahyaoguzhan/Hasta-Takip-Sistemi.git](https://github.com/kahyaoguzhan/Hasta-Takip-Sistemi.git)
+    
+    # Gerekli kütüphaneleri yükleyin
     pip install -r requirements.txt
-    # Frontend bağımlılıkları için (varsa)
-    npm install
+    
+    # Uygulamayı başlatın
+    python main.py
     ```
 
-3.  **Uygulamayı Başlatın:**
-    ```bash
-    python app.py
-    # Frontend sunucusunu başlatmak için (ayrıysa)
-    npm start
-    ```
-4.  **Bağlantı:** Web tarayıcınızdan belirtilen adrese gidin ve seri port bağlantısını (örn. COM3) yapın.
+3.  **Arayüz Kullanımı:**
+    * [cite_start]Doğru **COM Port**'u seçin ve "Bağlan" butonuna tıklayın[cite: 77].
+    * Test etmek istediğiniz modülü (Tremor, Bradikinezi veya Koordinasyon) "Başlat" butonu ile aktif edin.
+    * [cite_start]Veri toplama bittiğinde "Son Analizi Çalıştır" diyerek AI yorumunu alın[cite: 97].
 
 ---
 
-## 📊 Etki ve Fayda
-* [cite_start]**Toplumsal Etki:** Nörolojik rahatsızlığı olan bireylerin evde takibini kolaylaştırarak yaşam kalitesini artırır ve sağlık hizmetlerine erişimi demokratikleştirir. [cite: 33]
-* [cite_start]**Ekonomik Fayda:** Erken teşhis ve düzenli takip sayesinde gereksiz hastane ziyaretleri azalır, uzun vadeli tedavi maliyetleri düşer. [cite: 35]
+## 👥 Takım: SYNTAX
+
+Bu proje **Bursa Teknik Üniversitesi** öğrencileri tarafından geliştirilmiştir.
+
+| İsim | Rol |
+|------|-----|
+| **Oğuzhan KAHYA** | [Rol] |
+| **Huzeyfe Ahmet DÜNDAR** | [Rol] |
+| **Emir** | [Rol] |
+| **Berat** | [Rol] |
 
 ---
 
-## ⚠️ Riskler ve Kısıtlar
-* **Teknik Riskler:** Seri port bağlantısında kopmalar veya sensör verilerinde gürültü oluşabilir. [cite_start]AI modelinin doğruluğu veri setinin kalitesine bağlıdır. [cite: 37]
-* [cite_start]**Kısıtlar:** Sistem şu an için belirli sensör donanımlarına ve kablolu bağlantıya ihtiyaç duymaktadır. [cite: 39]
-
----
-
-## 🗺 Gelecek Yol Haritası
-- [x] Temel sensör veri okuma ve web arayüzü (MVP)
-- [x] Modül bazlı kontrol ve anlık grafik gösterimi
-- [x] Seri port bağlantı entegrasyonu
-- [ ] AI modelinin eğitilmesi ve entegrasyonunun tamamlanması
-- [ ] Hasta kayıt ve geçmiş veri inceleme modülü
-- [ ] Kablosuz veri iletimi (Bluetooth/Wi-Fi) desteği
-- [ ] [cite_start]Mobil uygulama geliştirme [cite: 40, 41, 42]
-
----
-
-## 👥 Takım Bilgileri
-[cite_start]**Takım Adı:** syntax [cite: 45]
-
-| İsim | Rol | GitHub |
-|------|-----|--------|
-| **Oğuzhan KAHYA** | [Rol] | [@GitHubKullanıcıAdı](https://github.com) |
-| **Huzeyfe Ahmet DÜNDAR** | [Rol] | [@GitHubKullanıcıAdı](https://github.com) |
-| **Emir** | [Rol] | [@GitHubKullanıcıAdı](https://github.com) |
-| **Berat** | [Rol] | [@GitHubKullanıcıAdı](https://github.com) |
-[cite_start][cite: 46]
-
----
-
-## 📸 Ekran Görüntüleri
-### Ana Kontrol Paneli
-[cite_start]Aşağıdaki ekran görüntüsü, Hasta Takip Sistemi'nin web tabanlı ana kontrol panelini göstermektedir. [cite: 48]
-
-* **Sol Panel:** Seri port bağlantı ayarları, Tremor, Bradikinezi ve Koordinasyon modüllerini başlatma/durdurma kontrolleri ve LDR sensöründen gelen anlık sinyal grafiği yer almaktadır.
-* **Sağ Panel:** AI analizlerini çalıştırma ve geçmiş analizleri inceleme seçenekleri ile analiz sonuçlarının gösterileceği alan bulunmaktadır.
-
-![Hasta Takip Sistemi Kontrol Paneli](image_0.png)
+> *Bu proje akademik araştırma ve prototip geliştirme amaçlıdır; tıbbi tanı cihazı değildir.*
+> 
