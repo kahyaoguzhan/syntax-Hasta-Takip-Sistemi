@@ -115,10 +115,10 @@ Bu proje **Bursa Teknik Üniversitesi** öğrencileri tarafından geliştirilmi�
 
 | İsim | Rol |
 |------|-----|
-| **Oğuzhan KAHYA** | [Rol] |
-| **Huzeyfe Ahmet DÜNDAR** | [Rol] |
-| **Emir** | [Rol] |
-| **Berat** | [Rol] |
+| **Oğuzhan KAHYA** | [Takım Kaptanı ve Elektronik] |
+| **Huzeyfe Ahmet DÜNDAR** | [Mekanik Tasarım ve Sunum Hazırlığı] |
+| **Emir Erdem DAYANÇ** | [Proje Araştırması ve Literatür Taraması] |
+| **Berat BOZTEPE** | [Yazılım Geliştirmesi ve Yapay Zeka] |
 
 ---
 
