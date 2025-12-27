@@ -1,0 +1,21 @@
+{
+  "module_a": {
+    "dominant_frequency_hz": 1.01,
+    "signal_amplitude": 456.49,
+    "status": "success"
+  },
+  "module_b": {
+    "avg_velocity_mm_s": 188.11,
+    "max_velocity_mm_s": 738.0,
+    "velocity_slope": 12.0205,
+    "status": "success"
+  },
+  "module_c": {
+    "avg_reaction_time_ms": 808.45,
+    "fatigue_index": 1.521,
+    "status": "success"
+  },
+  "overall_status": "success",
+  "timestamp": "20251227_150944",
+  "analysis_datetime": "2025-12-27 15:09:44"
+}
